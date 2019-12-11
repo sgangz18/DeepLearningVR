@@ -1,0 +1,7 @@
+Test loss: 0.11266078955885023
+Test accuracy: 0.9632
+############################################
+with weight decay
+
+Test loss: 0.12957554676532745
+Test accuracy: 0.9657
