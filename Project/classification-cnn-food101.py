@@ -24,6 +24,8 @@ from torchvision import datasets, models, transforms
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import time
+from collections import defaultdict
+import shutil
 import os
 import copy
 import sklearn.svm
@@ -32,11 +34,12 @@ import random
 
 plt.ion() 
 
-use_gpu = torch.cuda.is_available()
+use_gpu = 0 #torch.cuda.is_available()
 if use_gpu:
     print("Using CUDA")
 else:
     print("Using CPU")
+
 
 
 # ## Dataloader functions
@@ -228,10 +231,67 @@ def fit_features_to_SVM_new(features, labels, train_batch_size, K=5 ):
 # This updates the data, sets up the network and classifies using SVM.
 
 # In[ ]:
+if not os.path.isdir('./food-101/test') or not os.path.isdir('./food-101/train'):
+
+    def copytree(src, dst, symlinks = False, ignore = None):
+        if not os.path.exists(dst):
+            os.makedirs(dst)
+            shutil.copystat(src, dst)
+        lst = os.listdir(src)
+        if ignore:
+            excl = ignore(src, lst)
+            lst = [x for x in lst if x not in excl]
+        for item in lst:
+            s = os.path.join(src, item)
+            d = os.path.join(dst, item)
+            if symlinks and os.path.islink(s):
+                if os.path.lexists(d):
+                    os.remove(d)
+                os.symlink(os.readlink(s), d)
+                try:
+                    st = os.lstat(s)
+                    mode = stat.S_IMODE(st.st_mode)
+                    os.lchmod(d, mode)
+                except:
+                    pass # lchmod not available
+            elif os.path.isdir(s):
+                copytree(s, d, symlinks, ignore)
+            else:
+                shutil.copy2(s, d)
+
+    def generate_dir_file_map(path):
+        dir_files = defaultdict(list)
+        with open(path, 'r') as txt:
+            files = [l.strip() for l in txt.readlines()]
+            for f in files:
+                dir_name, id = f.split('/')
+                dir_files[dir_name].append(id + '.jpg')
+        return dir_files
+
+    train_dir_files = generate_dir_file_map('./food-101/meta/train.txt')
+    test_dir_files = generate_dir_file_map('./food-101/meta/test.txt')
 
 
-data_dir_10 = "/Users/sauravfitogram/Documents/Repositories/DeepLearningVR/Project/class10"  
-data_dir_30 = "/Users/sauravfitogram/Documents/Repositories/DeepLearningVR/Project/class30"
+    def ignore_train(d, filenames):
+        print(d)
+        subdir = d.split('/')[-1]
+        to_ignore = train_dir_files[subdir]
+        return to_ignore
+
+    def ignore_test(d, filenames):
+        print(d)
+        subdir = d.split('/')[-1]
+        to_ignore = test_dir_files[subdir]
+        return to_ignore
+
+    copytree('food-101/images', 'food-101/test', ignore=ignore_train)
+    copytree('food-101/images', 'food-101/train', ignore=ignore_test)
+    
+else:
+    print('Train/Test files already copied into separate folders.')
+
+data_dir_10 = './food-101/images'  
+data_dir_30 = './food-101/images'
 TRAIN = 'train'
 TEST = 'test'
 log = open("VGG16_Task1.txt", "w")
@@ -537,8 +597,8 @@ def set_up_network_param(net_type ='vgg16', freeze_training = False, clip_classi
 # In[1]:
 
 
-data_dir_10 = "/home/student/meowth/imgClas/food/class10"  
-data_dir_30 = "/home/student/meowth/imgClas/food/class30"
+data_dir_10 = "./food-101/class10"  
+data_dir_30 = "./food-101/class30"
 data_dir_100 = "/home/student/meowth/imgClas/food/class100"
 ImageDirectory = [data_dir_10, data_dir_30, data_dir_100 ]
 
