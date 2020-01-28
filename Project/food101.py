@@ -28,8 +28,8 @@ def plot_confusion_matrix(cm):
     plt.title('Confusion matrix',fontsize=15)
     plt.colorbar()
     classes = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio', 'beef_tartare', 'beet_salad', 'beignets', 'bibimbap', 'bread_pudding', 'breakfast_burrito'] 
-    plt.xticks([0,1,2,3,4,5,6,7,8,9], classes, fontsize=10)
-    plt.yticks([0,1,2,3,4,5,6,7,8,9], classes, fontsize=10,rotation=90,verticalalignment="center")
+    plt.xticks([0,1,2,3,4,5,6,7,8,9], classes, fontsize=6)
+    plt.yticks([0,1,2,3,4,5,6,7,8,9], classes, fontsize=6,rotation=90,verticalalignment="center")
     for i in range(cm.shape[0]):
         for j in range(cm.shape[1]):
             plt.text(j, i, format(cm[i, j], 'd'), horizontalalignment="center", color="white" if cm[i, j] > np.max(cm)/2. else "black")
