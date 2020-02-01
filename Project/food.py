@@ -26,28 +26,30 @@ import os
 def plot_confusion_matrix(cm):
     plt.imshow(cm, interpolation='nearest', cmap=plt.cm.Blues)
     plt.title('Confusion matrix',fontsize=15)
+    #       plt.figure(figsize=(10,10))
     plt.colorbar()
-    classes = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio', 'beef_tartare', 'beet_salad', 'beignets', 'bibimbap', 'bread_pudding', 'breakfast_burrito'] 
-    plt.xticks([0,1,2,3,4,5,6,7,8,9], classes, fontsize=10)
-    plt.yticks([0,1,2,3,4,5,6,7,8,9], classes, fontsize=10,rotation=90,verticalalignment="center")
+    #classes = ['bread_pudding', 'clam_chowder', 'deviled_eggs', 'eggs_benedict', 'french_onion_soup', 'guacamole', 'macaroni_and_cheese', 'onion_rings', 'paella', 'steak'] 
+    plt.xticks([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29], labels=None, fontsize=10)
+    plt.yticks([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29], labels=None, fontsize=10)
     for i in range(cm.shape[0]):
         for j in range(cm.shape[1]):
-            plt.text(j, i, format(cm[i, j], 'd'), horizontalalignment="center", color="white" if cm[i, j] > np.max(cm)/2. else "black")
-    plt.xlabel('Predicted label',fontsize=15)
-    plt.ylabel('True label',fontsize=15)
+            plt.text(j, i, format(cm[i, j], 'd'), horizontalalignment="center", fontsize=5, color="white" if cm[i, j] > np.max(cm)/2. else "black")
+    plt.xlabel('Predicted label',fontsize=5)
+    plt.ylabel('True label',fontsize=5)
+
     
 def plot_roc(fpr,tpr,roc_auc):
     plt.figure(figsize=(15,10))
-    plt.plot(fpr[0], tpr[0], color='C1', lw=3, label='ROC curve of apple_pie (AUC = %0.2f)' % roc_auc[0])
-    plt.plot(fpr[1], tpr[1], color='C2', lw=3, label='ROC curve of baby_pork_ribs (AUC = %0.2f)' % roc_auc[1])
-    plt.plot(fpr[2], tpr[2], color='C3', lw=3, label='ROC curve of baklava (AUC = %0.2f)' % roc_auc[2])
-    plt.plot(fpr[3], tpr[3], color='C4', lw=3, label='ROC curve of beef_carpaccio (AUC = %0.2f)' % roc_auc[3])
-    plt.plot(fpr[4], tpr[4], color='C5', lw=3, label='ROC curve of beef_tartare (AUC = %0.2f)' % roc_auc[4])
-    plt.plot(fpr[5], tpr[5], color='C6', lw=3, label='ROC curve of beet_salad (AUC = %0.2f)' % roc_auc[5])
-    plt.plot(fpr[6], tpr[6], color='C7', lw=3, label='ROC curve of beignets (AUC = %0.2f)' % roc_auc[6])
-    plt.plot(fpr[7], tpr[7], color='C8', lw=3, label='ROC curve of bibimbap (AUC = %0.2f)' % roc_auc[7])
-    plt.plot(fpr[8], tpr[8], color='C9', lw=3, label='ROC curve of bread_pudding (AUC = %0.2f)' % roc_auc[8])
-    plt.plot(fpr[9], tpr[9], color='C10', lw=3, label='ROC curve of breakfast_burrito (AUC = %0.2f)' % roc_auc[9])
+    plt.plot(fpr[0], tpr[0], color='C1', lw=3, label='ROC curve of bread_pudding (AUC = %0.2f)' % roc_auc[0])
+    plt.plot(fpr[1], tpr[1], color='C2', lw=3, label='ROC curve of clam_chowder (AUC = %0.2f)' % roc_auc[1])
+    plt.plot(fpr[2], tpr[2], color='C3', lw=3, label='ROC curve of deviled_eggs (AUC = %0.2f)' % roc_auc[2])
+    plt.plot(fpr[3], tpr[3], color='C4', lw=3, label='ROC curve of eggs_benedict (AUC = %0.2f)' % roc_auc[3])
+    plt.plot(fpr[4], tpr[4], color='C5', lw=3, label='ROC curve of french_onion_soup (AUC = %0.2f)' % roc_auc[4])
+    plt.plot(fpr[5], tpr[5], color='C6', lw=3, label='ROC curve of guacamole (AUC = %0.2f)' % roc_auc[5])
+    plt.plot(fpr[6], tpr[6], color='C7', lw=3, label='ROC curve of macaroni_and_cheese (AUC = %0.2f)' % roc_auc[6])
+    plt.plot(fpr[7], tpr[7], color='C8', lw=3, label='ROC curve of onion_rings (AUC = %0.2f)' % roc_auc[7])
+    plt.plot(fpr[8], tpr[8], color='C9', lw=3, label='ROC curve of paella (AUC = %0.2f)' % roc_auc[8])
+    plt.plot(fpr[9], tpr[9], color='C10', lw=3, label='ROC curve of steak (AUC = %0.2f)' % roc_auc[9])
 
     plt.plot([0, 1], [0, 1], color='navy', lw=3, linestyle='--',alpha=0.7)
     plt.xlim([0.0, 1.0])
@@ -58,9 +60,40 @@ def plot_roc(fpr,tpr,roc_auc):
     plt.legend(loc="lower right",fontsize=15)
     plt.show()
 
-"""
-# find file paths
-food = ['apple_pie', 'baby_back_ribs', 'baklava', 'beef_carpaccio', 'beef_tartare', 'beet_salad', 'beignets', 'bibimbap', 'bread_pudding', 'breakfast_burrito'] 
+
+
+
+# # Set up the network
+# alex_net_nc = set_up_network('alexnet', freeze_training = True)
+# if use_gpu:
+#     alex_net_nc.cuda() #.cuda() will move everything to the GPU side
+
+# for i, data_dir in enumerate(ImageDirectory):
+#     file = open("AlexNet_Task1"+str(i)+".txt", "w")
+    
+#     # Get Data
+#     dataloaders, image_datasets = data_loader(file, data_dir, TRAIN, TEST, 
+#                                               image_crop_size = 224, mini_batch_size = 1)
+#     dataset_sizes, classification_size, class_names = update_details(file, image_datasets)
+    
+#     # Update train_batch_size
+#     train_batch_size = dataset_sizes[TRAIN]
+#     train_batch_size = 100
+#     class_size = classification_size
+    
+#     # Get the image features for the imagenet trained network.
+#     imgfeatures_alexn, imglabels_alexn = get_features(file, alex_net_nc, train_batch_size,
+#                                                       number_of_classes = class_size)
+#     mean_accuracy, sd = fit_features_to_SVM(file, class_names, imgfeatures_alexn,
+#                                         imglabels_alexn, train_batch_size, K=5)
+#     print("The mean and standard deviation of classification for AlexNet is: ",
+#       mean_accuracy, sd, "for class size: ", class_size, file = file)
+#     del dataloaders, image_datasets, imgfeatures_alexn, imglabels_alexn
+#     file.close()
+# del alex_net_nc
+    
+"""# find file paths
+food = ['bread_pudding', 'clam_chowder', 'deviled_eggs', 'eggs_benedict', 'french_onion_soup', 'guacamole', 'macaroni_and_cheese', 'onion_rings', 'paella', 'steak'] 
 f_apple = glob.glob('food-101/train/'+food[0]+'/*')
 f_baby = glob.glob('food-101/train/'+food[1]+'/*')
 f_baklava = glob.glob('food-101/train/'+food[2]+'/*')
@@ -82,7 +115,11 @@ f_beet_salad_test = glob.glob('food-101/test/'+food[5]+'/*')
 f_beignets_test = glob.glob('food-101/test/'+food[6]+'/*')
 f_bibimbap_test = glob.glob('food-101/test/'+food[7]+'/*')
 f_bread_pudding_test = glob.glob('food-101/test/'+food[8]+'/*')
-f_breakfast_burrito_test = glob.glob('food-101/test/'+food[9]+'/*')"""
+f_breakfast_burrito_test = glob.glob('food-101/test/'+food[9]+'/*')
+# total 1000 files for each category
+print('Number of images per class:\n\t\ttrain\ttest \nApple_pie:\t{}\t{}\nBaby_pork_ribs:\t{}\t{}\nBaklava:\t{}\t{}'
+      .format(len(f_apple),len(f_apple_test),len(f_baby),len(f_baby_test),en(f_baklava),len(f_baklava_test)))"""
+
 
 train_datagen = ImageDataGenerator(featurewise_center=False,
                  samplewise_center=False,
@@ -101,14 +138,15 @@ train_datagen = ImageDataGenerator(featurewise_center=False,
                  vertical_flip=False,
                  rescale=1/255) #rescale to [0-1], add zoom range of 0.2x and horizontal flip
 train_generator = train_datagen.flow_from_directory(
-        "food-101/train",
+        "food-101/train-30-1",
         target_size=(224,224),
         batch_size=64)
 test_datagen = ImageDataGenerator(rescale=1/255) # just rescale to [0-1] for testing set
 test_generator = test_datagen.flow_from_directory(
-        "food-101/test",
+        "food-101/test-30-1",
         target_size=(224,224),
         batch_size=64)
+
 
 model = Sequential()
 model.add(Conv2D(filters = 32, kernel_size = (5,5), strides = 2, padding = 'Same', activation ='relu', input_shape = (224,224,3), kernel_initializer='he_normal'))
@@ -128,7 +166,7 @@ model.add(Conv2D(filters = 256, kernel_size = (2,2),padding = 'Same', activation
 model.add(GlobalAveragePooling2D())
 model.add(Dense(512, activation = "relu",kernel_initializer='he_normal'))
 model.add(Dropout(0.2))
-model.add(Dense(101, activation = "softmax",kernel_initializer='he_normal',kernel_regularizer=l2()))
+model.add(Dense(30, activation = "softmax",kernel_initializer='he_normal',kernel_regularizer=l2()))
 
 #callbacks
 checkpointer = ModelCheckpoint(filepath='model.hdf5', verbose=1, save_best_only=True, save_weights_only=True)
@@ -138,10 +176,11 @@ reduceLR = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=10, mode='
 model.compile(optimizer = 'Adam' , loss = "categorical_crossentropy", metrics=["accuracy"])
 model.summary()
 
-history = model.fit_generator(train_generator,steps_per_epoch=75750/64,
-                              validation_data=test_generator,validation_steps=25250/64, 
-                              epochs=100, callbacks=[checkpointer, reduceLR, earlystopping])
+history = model.fit_generator(train_generator,steps_per_epoch=100,
+                              validation_data=test_generator,validation_steps=80, 
+                              epochs=30, callbacks=[checkpointer, reduceLR, earlystopping])
 
+#training_loss, training_accuracy  = model.evaluate(x_train, y_train, verbose=False)
 plt.plot(history.history['loss'])
 plt.plot(history.history['accuracy'])
 plt.title('training loss and accuracy')
@@ -153,7 +192,7 @@ plt.show()
 # create another generator for all test images in a single batch 
 val_datagen = ImageDataGenerator(rescale=1./255)
 val_generator = test_datagen.flow_from_directory(
-        "food-101/test",
+        "food-101/test-30-1",
         target_size=(224,224),
         batch_size=750)
 
@@ -164,14 +203,43 @@ y_label = np.argmax(y_test,axis=1)
 
 print('Accuracy score: {:.1f}%'.format(accuracy_score(y_pred,y_label)*100))
 
-"""plot_confusion_matrix(confusion_matrix(y_label,y_pred))
+
+"""
+for i, data_dir in enumerate(ImageDirectory):
+    file = open("VGG16_Task2"+str(i)+".txt", "w")
+    # Get Data
+    dataloaders, image_datasets = data_loader(file, data_dir, TRAIN, TEST, image_crop_size = 224, mini_batch_size = 10 )
+    dataset_sizes, classification_size, class_names = update_details(file, image_datasets)
+    
+    # Set up the network
+    vgg16, criterion, optimizer_ft, exp_lr_scheduler = set_up_network_param('vgg16', 
+                         freeze_training = False, 
+                         clip_classifier = False, 
+                         classification_size=classification_size)
+
+    # training the model
+    vgg16 = train_model(file, vgg16, criterion, optimizer_ft, exp_lr_scheduler, dataloaders, num_epochs=Epochs)
+    
+    # Testing the model
+    print("Testing the trained model", file = file)
+    eval_model(file, vgg16, criterion)
+    
+    # Save the trained Model
+    torch.save(vgg16.state_dict(), "VGG16_v1_task2_size_"+str(classification_size)+".pt")
+    del vgg16, criterion, optimizer_ft, exp_lr_scheduler, dataloaders, image_datasets
+    file.close()
+"""
+
+plot_confusion_matrix(confusion_matrix(y_label,y_pred))
 
 # ROC Curve
-
 fpr = dict() # false positive rate
 tpr = dict() # true positive rate
 roc_auc = dict() # area under roc curve
-for i in range(10):
+for i in range(30):
     fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_pred_conf[:, i]) # roc_curve function apply to binary class only
     roc_auc[i] = auc(fpr[i], tpr[i])  # using the trapezoidal rule to get area under curve
-plot_roc(fpr,tpr,roc_auc)"""
+    print(roc_auc[i])
+#plot_roc(fpr,tpr,roc_auc)
+    
+    
